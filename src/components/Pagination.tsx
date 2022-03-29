@@ -4,14 +4,14 @@ import { Pagination } from 'antd'
 //   pageSize:10|20|50|100
 // }
 
-
-export default function Page (props:any) {
-  return <Pagination
-
+export default function Page(props: any) {
+  return (
+    <Pagination
       showSizeChanger
       showQuickJumper
-      showTotal={total => `Total ${total} items`}
-       onChange={props.onChange}
+      showTotal={(total) => `Total ${total} items`}
+      onChange={props.onChange}
       {...props}
     />
+  )
 }
