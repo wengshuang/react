@@ -27,7 +27,7 @@ const App = (props: any) => {
       props.setName(data.name)
       props.setMenu(data.authorization)
       console.log(data.authorization)
-      nav(menu[data.authorization[0]].path, { replace: true })
+      // nav(menu[data.authorization[0]].path, { replace: true })
     })
     // if (props.menu.includes(url)) {
 
