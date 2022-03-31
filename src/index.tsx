@@ -7,7 +7,7 @@ import { ConfigProvider } from 'antd'
 import moment from 'moment'
 import 'moment/locale/zh-cn'
 
-import './style/common.css'
+import './style/common.less'
 import App from './App'
 
 import store from './store'

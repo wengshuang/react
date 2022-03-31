@@ -28,12 +28,17 @@ axiosInstance.interceptors.response.use(
     //     localStorage.setItem('app_token', response.data.token)
     //   }
     // }
-
+    console.log(response)
     if (response.status === 200) {
-      return response
+      if (response.data.code === 200) {
+        return response
+      } else {
+        message.warning(response.data.message)
+        return Promise.reject(response)
+      }
     } else {
-      showMessage(response.status)
-      return response
+      message.error(showMessage(response.status))
+      return Promise.reject(response)
     }
   },
   // 请求失败
@@ -44,18 +49,20 @@ axiosInstance.interceptors.response.use(
       showMessage(response.status)
       return Promise.reject(response.data)
     } else {
-      message.error('网络连接异常,请稍后再试!')
+      message.warning('网络连接异常,请稍后再试!')
     }
   },
 )
+// 不需要token的url
+const unUseToken = ['/login', '/register']
 
 // axios实例拦截请求
 axiosInstance.interceptors.request.use(
-  (config: AxiosRequestConfig) => {
-    // const token = localStorage.getItem('app_token')
-    // if (token) {
-    //   config.headers.Authorization = `Bearer ${token}`
-    // }
+  (config: any) => {
+    const token = localStorage.getItem('token')
+    if (token && !unUseToken.includes(config.url)) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
     return config
   },
   (error: any) => {
