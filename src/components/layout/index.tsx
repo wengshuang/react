@@ -20,7 +20,7 @@ const LayoutCom = function (props: any) {
         <Sider width={200} className="site-layout-background">
           <Menu
             mode="inline"
-            defaultSelectedKeys={[loacl.pathname]}
+            selectedKeys={[loacl.pathname]}
             defaultOpenKeys={['sub1']}
             style={{ height: '100%', borderRight: 0 }}
           >
