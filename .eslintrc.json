@@ -23,6 +23,7 @@
   "plugins": [
     "react",
     "jsx-a11y",
+    "@typescript-eslint/eslint-plugin",
     "react-hooks"
   ],
   "settings": {

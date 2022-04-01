@@ -4,7 +4,6 @@ import { Form, Input, Button, Table, Row, Col, message } from 'antd'
 import AddModel from './components/AddModel'
 
 import api from '../../api/member'
-
 const List = function () {
   const [form] = Form.useForm()
   const [tableData, settableData] = useState([])
