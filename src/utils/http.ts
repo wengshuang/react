@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios, { AxiosInstance, AxiosResponse } from 'axios'
 // import qs from 'qs'
 import { message } from 'antd'
 import { showMessage } from './status'
@@ -9,13 +9,8 @@ export interface IResponse {
   data: any
   msg: string
 }
-console.log(process.env)
 let axiosInstance: AxiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/x-www-form-urlencoded',
-  },
 })
 
 // axios实例拦截响应
@@ -28,7 +23,6 @@ axiosInstance.interceptors.response.use(
     //     localStorage.setItem('app_token', response.data.token)
     //   }
     // }
-    console.log(response)
     if (response.status === 200) {
       if (response.data.code === 200) {
         return response

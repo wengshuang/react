@@ -36,27 +36,23 @@ const App = (props: any) => {
       .then(({ data: { data } }) => {
         props.setName(data.username)
         props.setMenu(data.auth)
-        const currentPath = path.pathname.slice(1).toUpperCase()
+        const currentPath = path.pathname
         // 如果刷新页面后的路由是有权限就跳到该路由
         // 如果没有就跳到home
         // 没有权限就跳到login
-
-        if (data.auth.length) {
-          if (data.auth.includes(currentPath)) {
-            nav(path.pathname, { replace: true })
-          } else {
-            nav('/home', { replace: true })
-          }
-        } else {
+        if (!data.auth.length) {
           nav('/login', { replace: true })
+          return
+        }
+        if (data.auth.includes(currentPath)) {
+          nav(path.pathname, { replace: true })
+        } else {
+          nav('/home', { replace: true })
         }
       })
       .catch(() => {
         nav('/login', { replace: true })
       })
-    // if (props.menu.includes(url)) {
-
-    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (

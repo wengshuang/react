@@ -48,7 +48,6 @@ const LayoutCom = function (props: any) {
 }
 
 export default connect((state: any) => {
-  console.log(state)
   return {
     name: state.user.name,
     menu: state.user.menu,

@@ -1,71 +1,110 @@
 import React, { useEffect, useState } from 'react'
 
-import { Form, Input, Button, Table, DatePicker, Row, Col } from 'antd'
+import { Form, Input, Button, Table, Row, Col, message } from 'antd'
 import AddModel from './components/AddModel'
 
-import api from '../../api/user'
-const columns = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
-  },
-]
+import api from '../../api/member'
 
 const List = function (props: any) {
   const [form] = Form.useForm()
   const [tableData, settableData] = useState([])
   const [loading, setloading] = useState(false)
+
   const [total, settotal] = useState(0)
-  const [current, setcurrent] = useState(1)
+  const [currentPage, setcurrentPage] = useState(1)
+  const [pageSize, setpageSize] = useState(20)
+
   const [top, settop] = useState(200)
   const [visible, setvisible] = useState(false)
   const onFinish = (values: any) => {
-    console.log('Success:', values)
     getData()
   }
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo)
-  }
-
-  async function getData(current?: number, size?: number) {
+  const getData = async (current: number = currentPage, size: number = pageSize) => {
+    console.log('getData', currentPage, 323232)
     try {
       setloading(true)
       const {
         data: { data },
-      } = await api.getData({
-        current,
-        size,
+      } = await api.queryMemberList({
+        currentPage: current,
+        pageSize: size,
+        name: form.getFieldValue('name'),
       })
-      settotal(data.length)
-      settableData(data)
+      settotal(data.total)
+      settableData(data.data)
       setloading(false)
     } catch (e) {
       console.log(e)
     }
   }
-  function onChange(current: number, size: number) {
-    console.log(current, size)
-    setcurrent(current)
+  const onChange = (c: number, size: number) => {
+    setcurrentPage(c)
+    setpageSize(size)
+    // getData(c, size)
   }
-
+  const save = () => {
+    getData()
+    setvisible(false)
+  }
+  useEffect(() => {
+    getData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageSize, currentPage])
   useEffect(() => {
     settop((document.querySelector('.ant-table-body') as any).getBoundingClientRect().top)
-    getData()
   }, [])
   // useMemo(()=>)
-
+  async function del(val: any) {
+    console.log(val)
+    try {
+      await api.deleteMember({
+        id: val._id,
+      })
+      message.success('操作成功')
+      getData()
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  const columns = [
+    {
+      title: '姓名',
+      dataIndex: 'name',
+      align: 'center' as 'center',
+      key: 'name',
+    },
+    {
+      title: '年龄',
+      dataIndex: 'age',
+      align: 'center' as 'center',
+      key: 'age',
+    },
+    {
+      title: '性别',
+      dataIndex: 'sex',
+      align: 'center' as 'center',
+      key: 'sex',
+    },
+    {
+      title: '籍贯',
+      dataIndex: 'city',
+      align: 'center' as 'center',
+      key: 'city',
+    },
+    {
+      title: '操作',
+      align: 'center' as 'center',
+      key: 'action',
+      render: (text: any, record: any) => {
+        return (
+          <Button type="link" onClick={() => del(record)}>
+            删除
+          </Button>
+        )
+      },
+    },
+  ]
   return (
     <>
       <Row>
@@ -74,22 +113,15 @@ const List = function (props: any) {
             form={form}
             layout="inline"
             onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
             autoComplete="off"
             style={{
               marginBottom: '20px',
             }}
           >
-            <Form.Item name="username">
-              <Input />
+            <Form.Item name="name">
+              <Input placeholder="输入名称" />
             </Form.Item>
 
-            <Form.Item name="password">
-              <Input />
-            </Form.Item>
-            <Form.Item>
-              <DatePicker picker="month" />
-            </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" loading={loading}>
                 查询
@@ -107,22 +139,21 @@ const List = function (props: any) {
       <Table
         loading={loading}
         columns={columns}
-        rowKey="name"
+        rowKey="_id"
         dataSource={tableData}
         pagination={{
           total,
-          current,
-          pageSize: 20,
+          current: currentPage,
+          pageSize,
           onChange,
           showSizeChanger: true,
-          showQuickJumper: true,
-          showTotal: (total) => `Total ${total} items`,
+          showTotal: (total) => `总共 ${total} 条`,
         }}
         scroll={{
           y: `calc(100vh - ${top + 76}px)`,
         }}
       />
-      <AddModel visible={visible} onOk={() => setvisible(false)} onCancel={() => setvisible(false)} />
+      <AddModel visible={visible} save={save} onOk={() => setvisible(false)} onCancel={() => setvisible(false)} />
     </>
   )
 }
