@@ -5,7 +5,7 @@ import AddModel from './components/AddModel'
 
 import api from '../../api/member'
 
-const List = function (props: any) {
+const List = function () {
   const [form] = Form.useForm()
   const [tableData, settableData] = useState([])
   const [loading, setloading] = useState(false)
@@ -16,7 +16,7 @@ const List = function (props: any) {
 
   const [top, settop] = useState(200)
   const [visible, setvisible] = useState(false)
-  const onFinish = (values: any) => {
+  const onFinish = () => {
     getData()
   }
 
@@ -25,11 +25,11 @@ const List = function (props: any) {
     try {
       setloading(true)
       const {
-        data: { data },
+        data: { data }
       } = await api.queryMemberList({
         currentPage: current,
         pageSize: size,
-        name: form.getFieldValue('name'),
+        name: form.getFieldValue('name')
       })
       settotal(data.total)
       settableData(data.data)
@@ -49,7 +49,6 @@ const List = function (props: any) {
   }
   useEffect(() => {
     getData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageSize, currentPage])
   useEffect(() => {
     settop((document.querySelector('.ant-table-body') as any).getBoundingClientRect().top)
@@ -59,7 +58,7 @@ const List = function (props: any) {
     console.log(val)
     try {
       await api.deleteMember({
-        id: val._id,
+        id: val._id
       })
       message.success('操作成功')
       getData()
@@ -72,25 +71,25 @@ const List = function (props: any) {
       title: '姓名',
       dataIndex: 'name',
       align: 'center' as 'center',
-      key: 'name',
+      key: 'name'
     },
     {
       title: '年龄',
       dataIndex: 'age',
       align: 'center' as 'center',
-      key: 'age',
+      key: 'age'
     },
     {
       title: '性别',
       dataIndex: 'sex',
       align: 'center' as 'center',
-      key: 'sex',
+      key: 'sex'
     },
     {
       title: '籍贯',
       dataIndex: 'city',
       align: 'center' as 'center',
-      key: 'city',
+      key: 'city'
     },
     {
       title: '操作',
@@ -102,8 +101,8 @@ const List = function (props: any) {
             删除
           </Button>
         )
-      },
-    },
+      }
+    }
   ]
   return (
     <>
@@ -115,7 +114,7 @@ const List = function (props: any) {
             onFinish={onFinish}
             autoComplete="off"
             style={{
-              marginBottom: '20px',
+              marginBottom: '20px'
             }}
           >
             <Form.Item name="name">
@@ -147,10 +146,10 @@ const List = function (props: any) {
           pageSize,
           onChange,
           showSizeChanger: true,
-          showTotal: (total) => `总共 ${total} 条`,
+          showTotal: (total) => `总共 ${total} 条`
         }}
         scroll={{
-          y: `calc(100vh - ${top + 76}px)`,
+          y: `calc(100vh - ${top + 76}px)`
         }}
       />
       <AddModel visible={visible} save={save} onOk={() => setvisible(false)} onCancel={() => setvisible(false)} />
