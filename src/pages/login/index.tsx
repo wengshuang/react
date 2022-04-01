@@ -12,10 +12,10 @@ const Login = function (props: any) {
   async function handleClick() {
     try {
       const {
-        data: { data },
+        data: { data }
       } = await api.login({
         username: username || 'admin',
-        password: password || '000000',
+        password: password || '000000'
       })
       localStorage.token = data.token
       props.setName(data.username)
@@ -58,13 +58,13 @@ export default connect(null, {
   setName: (name: string) => ({
     type: 'SET_NAME',
     payload: {
-      name,
-    },
+      name
+    }
   }),
   setMenu: (menu: string[]) => ({
     type: 'SET_MENU',
     payload: {
-      menu,
-    },
-  }),
+      menu
+    }
+  })
 })(Login)

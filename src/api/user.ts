@@ -4,23 +4,23 @@ const api = {
     return request({
       url: '/login',
       method: 'get',
-      data,
+      data
     })
   },
   getUserInfo: (data?: any) => {
     return request({
       url: '/getUserInfo',
       method: 'get',
-      data,
+      data
     })
   },
   getData: (data?: any) => {
     return request({
       url: '/getData',
       method: 'get',
-      data,
+      data
     })
-  },
+  }
 }
 
 export default api

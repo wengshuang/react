@@ -74,20 +74,20 @@ const App = (props: any) => {
 }
 export default connect(
   (state: any) => ({
-    menu: state.user.menu,
+    menu: state.user.menu
   }),
   {
     setName: (name: string) => ({
       type: 'SET_NAME',
       payload: {
-        name,
-      },
+        name
+      }
     }),
     setMenu: (menu: string[]) => ({
       type: 'SET_MENU',
       payload: {
-        menu,
-      },
-    }),
-  },
+        menu
+      }
+    })
+  }
 )(App)

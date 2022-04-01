@@ -7,23 +7,23 @@ const router: any = {
   '/list': {
     path: '/list',
     name: '成员列表',
-    Com: LIST,
+    Com: LIST
   },
   '/details': {
     path: '/details',
     name: '详情',
-    Com: DETAILS,
+    Com: DETAILS
   },
   '/product': {
     path: '/product',
     name: '生产',
-    Com: PRODUCT,
+    Com: PRODUCT
   },
   '/users': {
     path: '/users',
     name: '用户列表',
-    Com: USERS,
-  },
+    Com: USERS
+  }
 }
 
 export default router

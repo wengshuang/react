@@ -8,7 +8,7 @@ interface Iaction {
 }
 const initialState: IState = {
   name: '',
-  menu: [],
+  menu: []
 }
 
 export default function userStore(state = initialState, action: Iaction) {
@@ -16,12 +16,12 @@ export default function userStore(state = initialState, action: Iaction) {
     case 'SET_NAME':
       return {
         ...state,
-        name: action.payload.name,
+        name: action.payload.name
       }
     case 'SET_MENU':
       return {
         ...state,
-        menu: action.payload.menu,
+        menu: action.payload.menu
       }
     default: {
       return state

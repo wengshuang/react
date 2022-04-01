@@ -2,7 +2,6 @@ import axios, { AxiosInstance, AxiosResponse } from 'axios'
 // import qs from 'qs'
 import { message } from 'antd'
 import { showMessage } from './status'
-
 // 返回res.data的interface
 export interface IResponse {
   code: number | string
@@ -10,7 +9,7 @@ export interface IResponse {
   msg: string
 }
 let axiosInstance: AxiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL,
+  baseURL: process.env.REACT_APP_BASE_URL
 })
 
 // axios实例拦截响应
@@ -45,7 +44,7 @@ axiosInstance.interceptors.response.use(
     } else {
       message.warning('网络连接异常,请稍后再试!')
     }
-  },
+  }
 )
 // 不需要token的url
 const unUseToken = ['/login', '/register']
@@ -61,7 +60,7 @@ axiosInstance.interceptors.request.use(
   },
   (error: any) => {
     return Promise.reject(error)
-  },
+  }
 )
 interface Ruquest {
   url: string
@@ -73,7 +72,7 @@ const request = (params: Ruquest) => {
   return axiosInstance({
     url: params.url,
     method: params.method,
-    [params.method === 'get' ? 'params' : 'data']: params.data,
+    [params.method === 'get' ? 'params' : 'data']: params.data
   })
 }
 export default request

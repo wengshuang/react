@@ -28,7 +28,7 @@ export default function AddModel(props: any) {
         forceRender
         destroyOnClose
         style={{
-          top: '25vh',
+          top: '25vh'
         }}
         visible={props.visible}
         width={500}
@@ -40,7 +40,7 @@ export default function AddModel(props: any) {
         footer={[
           <Button key="submit" type="primary" onClick={() => handleOk()}>
             Submit
-          </Button>,
+          </Button>
         ]}
       >
         <Form form={form} preserve={false} autoComplete="off">

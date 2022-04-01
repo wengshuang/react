@@ -28,7 +28,7 @@ const LayoutCom = function (props: any) {
               <Link to="/home">首页</Link>
             </Menu.Item>
             <SubMenu key="sub1" icon={<UserOutlined />} title="成员">
-              {props.menu.map((item: string, index: number) => {
+              {props.menu.map((item: string) => {
                 const { path, name } = menu[item]
                 return (
                   <Menu.Item key={path}>
@@ -50,6 +50,6 @@ const LayoutCom = function (props: any) {
 export default connect((state: any) => {
   return {
     name: state.user.name,
-    menu: state.user.menu,
+    menu: state.user.menu
   }
 })(LayoutCom)

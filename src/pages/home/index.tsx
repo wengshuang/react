@@ -10,14 +10,14 @@ const data = [
   { year: '1996', value: 6 },
   { year: '1997', value: 7 },
   { year: '1998', value: 9 },
-  { year: '1999', value: 13 },
+  { year: '1999', value: 13 }
 ]
-export default function Home(props: any) {
+export default function Home() {
   useEffect(() => {
     const chart = new Chart({
       container: 'container',
       autoFit: true,
-      height: 400,
+      height: 400
     })
     // chart.tooltip({
     //   showMarkers: false,
