@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 
-import { Form, Input, Button, Table, Row, Col, message } from 'antd'
+import { Form, Input, Button, Table, Row, Col, message, Select } from 'antd'
 import AddModel from './components/AddModel'
+import tagApi from '../../api/tags'
 
-import api from '../../api/member'
-const List = function () {
+import api from '../../api/blogs'
+const { Option } = Select
+const BlogMenu = function () {
   const [form] = Form.useForm()
   const [tableData, settableData] = useState([])
   const [loading, setloading] = useState(false)
@@ -14,21 +16,23 @@ const List = function () {
   const [pageSize, setpageSize] = useState(20)
 
   const [top, settop] = useState(200)
+  const [id, setid] = useState('')
   const [visible, setvisible] = useState(false)
+  const [tags, setTags] = React.useState([])
   const onFinish = () => {
     getData()
   }
 
   const getData = async (current: number = currentPage, size: number = pageSize) => {
-    console.log('getData', currentPage, 323232)
     try {
       setloading(true)
       const {
         data: { data }
-      } = await api.queryMemberList({
+      } = await api.getBlogs({
         currentPage: current,
         pageSize: size,
-        name: form.getFieldValue('name')
+        title: form.getFieldValue('title'),
+        tagId: form.getFieldValue('tagId')
       })
       settotal(data.total)
       settableData(data.data)
@@ -52,12 +56,15 @@ const List = function () {
 
   useEffect(() => {
     settop((document.querySelector('.ant-table-body') as any).getBoundingClientRect().top)
+    tagApi.getAllTags().then(({ data }) => {
+      setTags(data.data)
+    })
   }, [])
   // useMemo(()=>)
   async function del(val: any) {
     console.log(val)
     try {
-      await api.deleteMember({
+      await api.delBlog({
         id: val._id
       })
       message.success('操作成功')
@@ -66,30 +73,22 @@ const List = function () {
       console.log(e)
     }
   }
+  async function modify(val: any) {
+    setid(val._id)
+    setvisible(true)
+  }
   const columns = [
     {
-      title: '姓名',
-      dataIndex: 'name',
+      title: '标题',
+      dataIndex: 'title',
       align: 'center' as 'center',
-      key: 'name'
+      key: 'title'
     },
     {
-      title: '年龄',
-      dataIndex: 'age',
+      title: '所属标签',
+      dataIndex: 'tagName',
       align: 'center' as 'center',
-      key: 'age'
-    },
-    {
-      title: '性别',
-      dataIndex: 'sex',
-      align: 'center' as 'center',
-      key: 'sex'
-    },
-    {
-      title: '籍贯',
-      dataIndex: 'city',
-      align: 'center' as 'center',
-      key: 'city'
+      key: 'tagName'
     },
     {
       title: '操作',
@@ -97,9 +96,14 @@ const List = function () {
       key: 'action',
       render: (text: any, record: any) => {
         return (
-          <Button type="link" onClick={() => del(record)}>
-            删除
-          </Button>
+          <>
+            <Button type="link" onClick={() => del(record)}>
+              删除
+            </Button>
+            <Button type="link" onClick={() => modify(record)}>
+              修改
+            </Button>
+          </>
         )
       }
     }
@@ -117,10 +121,20 @@ const List = function () {
               marginBottom: '20px'
             }}
           >
-            <Form.Item name="name">
+            <Form.Item name="title">
               <Input placeholder="输入名称" />
             </Form.Item>
-
+            <Form.Item name="tagId">
+              <Select style={{ width: '220px' }} allowClear>
+                {tags.map((item: any) => {
+                  return (
+                    <Option value={item._id} key={item._id}>
+                      {item.name}
+                    </Option>
+                  )
+                })}
+              </Select>
+            </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" loading={loading}>
                 查询
@@ -129,7 +143,14 @@ const List = function () {
           </Form>
         </Col>
         <Col span={2} offset={2} className="text-right">
-          <Button type="primary" onClick={() => setvisible(true)}>
+          <Button
+            type="primary"
+            onClick={() => {
+              setid('')
+
+              setvisible(true)
+            }}
+          >
             新增
           </Button>
         </Col>
@@ -152,8 +173,15 @@ const List = function () {
           y: `calc(100vh - ${top + 76}px)`
         }}
       />
-      <AddModel visible={visible} save={save} onOk={() => setvisible(false)} onCancel={() => setvisible(false)} />
+      <AddModel
+        visible={visible}
+        save={save}
+        onOk={() => setvisible(false)}
+        onCancel={() => setvisible(false)}
+        tags={tags}
+        id={id}
+      />
     </>
   )
 }
-export default List
+export default BlogMenu

@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { connect } from 'react-redux'
 import api from '../../api/user'
 import './index.less'
 
-const Login = function (props: any) {
+const Login = function () {
   const [username, setusername] = useState('admin')
-  const [password, setpassword] = useState('000000')
+  const [password, setpassword] = useState('')
   const nav = useNavigate()
 
   async function handleClick() {
@@ -15,11 +14,9 @@ const Login = function (props: any) {
         data: { data }
       } = await api.login({
         username: username || 'admin',
-        password: password || '000000'
+        password: password
       })
       localStorage.token = data.token
-      props.setName(data.username)
-      props.setMenu(data.auth)
       nav('/home')
     } catch (e) {
       console.log(e)
@@ -43,28 +40,15 @@ const Login = function (props: any) {
             value={password}
             onChange={(e) => setpassword(e.target.value)}
             name="password"
-            placeholder="123456"
+            placeholder="密码"
             className="input-item"
           />
           <button className="btn" onClick={() => handleClick()}>
-            Login
+            登录
           </button>
         </div>
       </div>
     </div>
   )
 }
-export default connect(null, {
-  setName: (name: string) => ({
-    type: 'SET_NAME',
-    payload: {
-      name
-    }
-  }),
-  setMenu: (menu: string[]) => ({
-    type: 'SET_MENU',
-    payload: {
-      menu
-    }
-  })
-})(Login)
+export default Login

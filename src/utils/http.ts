@@ -39,7 +39,7 @@ axiosInstance.interceptors.response.use(
     const { response } = error
     if (response) {
       // 请求已发出，但是不在2xx的范围
-      showMessage(response.status)
+      message.error(showMessage(response.status))
       return Promise.reject(response.data)
     } else {
       message.warning('网络连接异常,请稍后再试!')

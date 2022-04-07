@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { Form, Input, Button, Table, Row, Col, message } from 'antd'
 import AddModel from './components/AddModel'
 
-import api from '../../api/member'
-const List = function () {
+import api from '../../api/tags'
+const BlogMenu = function () {
   const [form] = Form.useForm()
   const [tableData, settableData] = useState([])
   const [loading, setloading] = useState(false)
@@ -25,7 +25,7 @@ const List = function () {
       setloading(true)
       const {
         data: { data }
-      } = await api.queryMemberList({
+      } = await api.getTags({
         currentPage: current,
         pageSize: size,
         name: form.getFieldValue('name')
@@ -57,7 +57,7 @@ const List = function () {
   async function del(val: any) {
     console.log(val)
     try {
-      await api.deleteMember({
+      await api.delTag({
         id: val._id
       })
       message.success('操作成功')
@@ -68,28 +68,10 @@ const List = function () {
   }
   const columns = [
     {
-      title: '姓名',
+      title: '名称',
       dataIndex: 'name',
       align: 'center' as 'center',
       key: 'name'
-    },
-    {
-      title: '年龄',
-      dataIndex: 'age',
-      align: 'center' as 'center',
-      key: 'age'
-    },
-    {
-      title: '性别',
-      dataIndex: 'sex',
-      align: 'center' as 'center',
-      key: 'sex'
-    },
-    {
-      title: '籍贯',
-      dataIndex: 'city',
-      align: 'center' as 'center',
-      key: 'city'
     },
     {
       title: '操作',
@@ -156,4 +138,4 @@ const List = function () {
     </>
   )
 }
-export default List
+export default BlogMenu

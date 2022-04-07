@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import { Modal, Form, Input, Button, Radio, message } from 'antd'
-import api from '../../../api/member'
+import { Modal, Form, Input, Button, message } from 'antd'
+import api from '../../../api/tags'
 
 export default function AddModel(props: any) {
   const [form] = Form.useForm()
@@ -8,7 +8,7 @@ export default function AddModel(props: any) {
     try {
       const data = await form.validateFields()
       console.log(data)
-      await api.addMember(data)
+      await api.addTag(data)
       message.success('操作成功！')
       props.save()
     } catch (e) {
@@ -44,19 +44,7 @@ export default function AddModel(props: any) {
         ]}
       >
         <Form form={form} preserve={false} autoComplete="off">
-          <Form.Item label="姓名" name="name" rules={[{ required: true }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item label="性别" name="sex" rules={[{ required: true }]}>
-            <Radio.Group>
-              <Radio value="0">男</Radio>
-              <Radio value="1">女</Radio>
-            </Radio.Group>
-          </Form.Item>
-          <Form.Item label="年龄" name="age" rules={[{ required: true }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item label="籍贯" name="city" rules={[{ required: true }]}>
+          <Form.Item label="名称" name="name" rules={[{ required: true }]}>
             <Input />
           </Form.Item>
         </Form>

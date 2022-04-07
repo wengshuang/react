@@ -1,16 +1,14 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { Outlet, Link, useLocation } from 'react-router-dom'
 import { Layout, Menu } from 'antd'
-import { UserOutlined, HomeOutlined } from '@ant-design/icons'
+import { UserOutlined, HomeOutlined, TagsOutlined } from '@ant-design/icons'
 import style from './index.module.css'
-import menu from '../../routers'
 
 const { SubMenu } = Menu
 const { Header, Sider } = Layout
 
 const LayoutCom = function (props: any) {
-  const loacl = useLocation()
+  const local = useLocation()
   return (
     <Layout>
       <Header>
@@ -20,23 +18,26 @@ const LayoutCom = function (props: any) {
         <Sider width={200} className="site-layout-background">
           <Menu
             mode="inline"
-            selectedKeys={[loacl.pathname]}
-            defaultOpenKeys={['sub1']}
+            selectedKeys={[local.pathname]}
+            openKeys={[local.pathname.split('-')[0].replace('/', '')]}
             style={{ height: '100%', borderRight: 0 }}
           >
-            <Menu.Item key="/home" icon={<HomeOutlined />}>
+            <Menu.Item key="home" icon={<HomeOutlined />}>
               <Link to="/home">首页</Link>
             </Menu.Item>
-            <SubMenu key="sub1" icon={<UserOutlined />} title="成员">
-              {props.menu.map((item: string) => {
-                const { path, name } = menu[item]
-                return (
-                  <Menu.Item key={path}>
-                    <Link to={path}>{name}</Link>
-                  </Menu.Item>
-                )
-              })}
+            <SubMenu key="blog" icon={<TagsOutlined />} title="博客设置">
+              <Menu.Item key="/blog-menu">
+                <Link to="/blog-menu">博客菜单</Link>
+              </Menu.Item>
+              <Menu.Item key="/blog-list">
+                <Link to="/blog-list">博客列表</Link>
+              </Menu.Item>
             </SubMenu>
+            {/* <SubMenu key="/list" icon={<UserOutlined />} title="测试成员">
+              <Menu.Item key="/list">
+                <Link to="/list">成员</Link>
+              </Menu.Item>
+            </SubMenu> */}
           </Menu>
         </Sider>
         <Layout style={{ padding: '24px' }}>
@@ -47,9 +48,4 @@ const LayoutCom = function (props: any) {
   )
 }
 
-export default connect((state: any) => {
-  return {
-    name: state.user.name,
-    menu: state.user.menu
-  }
-})(LayoutCom)
+export default LayoutCom
