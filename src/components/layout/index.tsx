@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet, Link, useLocation } from 'react-router-dom'
 import { Layout, Menu } from 'antd'
-import { UserOutlined, HomeOutlined, TagsOutlined } from '@ant-design/icons'
+import { HomeOutlined, TagsOutlined } from '@ant-design/icons'
 import style from './index.module.css'
 
 const { SubMenu } = Menu

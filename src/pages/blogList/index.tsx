@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
-import { Form, Input, Button, Table, Row, Col, message, Select } from 'antd'
+import { Form, Input, Button, Row, Col, message, Select } from 'antd'
 import AddModel from './components/AddModel'
 import tagApi from '../../api/tags'
-
+import Table from '../../components/Table'
 import api from '../../api/blogs'
 const { Option } = Select
 const BlogMenu = function () {
@@ -15,7 +15,6 @@ const BlogMenu = function () {
   const [currentPage, setcurrentPage] = useState(1)
   const [pageSize, setpageSize] = useState(20)
 
-  const [top, settop] = useState(200)
   const [id, setid] = useState('')
   const [visible, setvisible] = useState(false)
   const [tags, setTags] = React.useState([])
@@ -55,7 +54,6 @@ const BlogMenu = function () {
   }, [pageSize, currentPage])
 
   useEffect(() => {
-    settop((document.querySelector('.ant-table-body') as any).getBoundingClientRect().top)
     tagApi.getAllTags().then(({ data }) => {
       setTags(data.data)
     })
@@ -159,18 +157,12 @@ const BlogMenu = function () {
       <Table
         loading={loading}
         columns={columns}
-        rowKey="_id"
         dataSource={tableData}
         pagination={{
           total,
           current: currentPage,
           pageSize,
-          onChange,
-          showSizeChanger: true,
-          showTotal: (total) => `总共 ${total} 条`
-        }}
-        scroll={{
-          y: `calc(100vh - ${top + 76}px)`
+          onChange
         }}
       />
       <AddModel

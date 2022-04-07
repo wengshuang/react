@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
-import { Form, Input, Button, Table, Row, Col, message } from 'antd'
+import { Form, Input, Button, Row, Col, message } from 'antd'
 import AddModel from './components/AddModel'
-
+import Table from '../../components/Table'
 import api from '../../api/tags'
 const BlogMenu = function () {
   const [form] = Form.useForm()
@@ -13,14 +13,12 @@ const BlogMenu = function () {
   const [currentPage, setcurrentPage] = useState(1)
   const [pageSize, setpageSize] = useState(20)
 
-  const [top, settop] = useState(200)
   const [visible, setvisible] = useState(false)
   const onFinish = () => {
     getData()
   }
 
   const getData = async (current: number = currentPage, size: number = pageSize) => {
-    console.log('getData', currentPage, 323232)
     try {
       setloading(true)
       const {
@@ -50,9 +48,6 @@ const BlogMenu = function () {
     getData()
   }, [pageSize, currentPage])
 
-  useEffect(() => {
-    settop((document.querySelector('.ant-table-body') as any).getBoundingClientRect().top)
-  }, [])
   // useMemo(()=>)
   async function del(val: any) {
     console.log(val)
@@ -127,11 +122,7 @@ const BlogMenu = function () {
           current: currentPage,
           pageSize,
           onChange,
-          showSizeChanger: true,
-          showTotal: (total) => `总共 ${total} 条`
-        }}
-        scroll={{
-          y: `calc(100vh - ${top + 76}px)`
+          showSizeChanger: true
         }}
       />
       <AddModel visible={visible} save={save} onOk={() => setvisible(false)} onCancel={() => setvisible(false)} />
