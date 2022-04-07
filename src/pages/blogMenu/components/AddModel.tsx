@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Modal, Form, Input, Button, message } from 'antd'
-import api from '../../../api/tags'
+import api from '@/api/tags'
 
 export default function AddModel(props: any) {
   const [form] = Form.useForm()

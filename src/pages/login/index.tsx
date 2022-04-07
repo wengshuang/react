@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import api from '../../api/user'
+import api from '@/api/user'
 import './index.less'
 
 const Login = function () {

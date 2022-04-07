@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 
 import { Form, Input, Button, Row, Col, message } from 'antd'
 import AddModel from './components/AddModel'
-import Table from '../../components/Table'
-import api from '../../api/tags'
+import Table from '@/components/Table'
+import api from '@/api/tags'
 const BlogMenu = function () {
   const [form] = Form.useForm()
   const [tableData, settableData] = useState([])

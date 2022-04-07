@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Modal, Form, Select, Button, message, Input } from 'antd'
 import BraftEditor from 'braft-editor'
-import api from '../../../api/blogs'
+import api from '@/api/blogs'
 const { Option } = Select
 export default function AddModel(props: any) {
   const [form] = Form.useForm()

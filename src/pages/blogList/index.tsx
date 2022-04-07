@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 
 import { Form, Input, Button, Row, Col, message, Select } from 'antd'
 import AddModel from './components/AddModel'
-import tagApi from '../../api/tags'
-import Table from '../../components/Table'
-import api from '../../api/blogs'
+import tagApi from '@/api/tags'
+import Table from '@/components/Table'
+import api from '@/api/blogs'
 const { Option } = Select
 const BlogMenu = function () {
   const [form] = Form.useForm()
