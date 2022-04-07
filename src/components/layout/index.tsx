@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet, Link, useLocation } from 'react-router-dom'
 import { Layout, Menu } from 'antd'
-import { HomeOutlined, TagsOutlined } from '@ant-design/icons'
+import { TagsOutlined } from '@ant-design/icons'
 import style from './index.module.css'
 
 const { SubMenu } = Menu
@@ -23,9 +23,9 @@ const LayoutCom = function (props: any) {
             defaultOpenKeys={[str.split('-')[0].replace('/', '')]}
             style={{ height: '100%', borderRight: 0 }}
           >
-            <Menu.Item key="/home" icon={<HomeOutlined />}>
+            {/* <Menu.Item key="/home" icon={<HomeOutlined />}>
               <Link to="/home">首页</Link>
-            </Menu.Item>
+            </Menu.Item> */}
             <SubMenu key="blog" icon={<TagsOutlined />} title="博客设置">
               <Menu.Item key="/blog-menu">
                 <Link to="/blog-menu">博客菜单</Link>
