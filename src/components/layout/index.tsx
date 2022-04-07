@@ -19,7 +19,7 @@ const LayoutCom = function (props: any) {
           <Menu
             mode="inline"
             selectedKeys={[local.pathname]}
-            openKeys={[local.pathname.split('-')[0].replace('/', '')]}
+            defaultOpenKeys={[local.pathname.split('-')[0].replace('/', '')]}
             style={{ height: '100%', borderRight: 0 }}
           >
             <Menu.Item key="home" icon={<HomeOutlined />}>
@@ -33,7 +33,8 @@ const LayoutCom = function (props: any) {
                 <Link to="/blog-list">博客列表</Link>
               </Menu.Item>
             </SubMenu>
-            {/* <SubMenu key="/list" icon={<UserOutlined />} title="测试成员">
+            {/* icon={<UserOutlined />} */}
+            {/* <SubMenu key="list" title="测试成员">
               <Menu.Item key="/list">
                 <Link to="/list">成员</Link>
               </Menu.Item>
