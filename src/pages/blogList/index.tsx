@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { Form, Input, Button, Row, Col, message, Select } from 'antd'
+import { Form, Input, Button, Row, Col, message, Select, Popconfirm } from 'antd'
 import AddModel from './components/AddModel'
 import tagApi from '@/api/tags'
 import Table from '@/components/Table'
@@ -95,9 +95,10 @@ const BlogMenu = function () {
       render: (text: any, record: any) => {
         return (
           <>
-            <Button type="link" onClick={() => del(record)}>
-              删除
-            </Button>
+            <Popconfirm title="确定删除吗？" onConfirm={() => del(record)} okText="Yes" cancelText="No">
+              <Button type="link">删除</Button>
+            </Popconfirm>
+
             <Button type="link" onClick={() => modify(record)}>
               修改
             </Button>
