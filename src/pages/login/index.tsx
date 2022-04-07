@@ -17,7 +17,7 @@ const Login = function () {
         password: password
       })
       localStorage.token = data.token
-      nav('/home')
+      nav('/blog-menu')
     } catch (e) {
       console.log(e)
     }
