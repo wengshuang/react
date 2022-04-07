@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios'
 // import qs from 'qs'
+
 import { message } from 'antd'
 import { showMessage } from './status'
 // 返回res.data的interface
@@ -37,7 +38,11 @@ axiosInstance.interceptors.response.use(
   // 请求失败
   (error: any) => {
     const { response } = error
-    if (response) {
+    if (response.status === 401) {
+      location.replace('/login')
+      message.error(showMessage(response.status))
+      return Promise.reject(response.data)
+    } else if (response) {
       // 请求已发出，但是不在2xx的范围
       message.error(showMessage(response.status))
       return Promise.reject(response.data)

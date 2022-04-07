@@ -9,6 +9,7 @@ const { Header, Sider } = Layout
 
 const LayoutCom = function (props: any) {
   const local = useLocation()
+  const str = local.pathname
   return (
     <Layout>
       <Header>
@@ -19,10 +20,10 @@ const LayoutCom = function (props: any) {
           <Menu
             mode="inline"
             selectedKeys={[local.pathname]}
-            defaultOpenKeys={[local.pathname.split('-')[0].replace('/', '')]}
+            defaultOpenKeys={[str.split('-')[0].replace('/', '')]}
             style={{ height: '100%', borderRight: 0 }}
           >
-            <Menu.Item key="home" icon={<HomeOutlined />}>
+            <Menu.Item key="/home" icon={<HomeOutlined />}>
               <Link to="/home">首页</Link>
             </Menu.Item>
             <SubMenu key="blog" icon={<TagsOutlined />} title="博客设置">
