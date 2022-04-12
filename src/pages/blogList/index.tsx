@@ -89,6 +89,12 @@ const BlogMenu = function () {
       key: 'tagName'
     },
     {
+      title: '浏览次数',
+      dataIndex: 'views',
+      align: 'center' as 'center',
+      key: 'views'
+    },
+    {
       title: '操作',
       align: 'center' as 'center',
       key: 'action',
@@ -124,7 +130,7 @@ const BlogMenu = function () {
               <Input placeholder="输入名称" />
             </Form.Item>
             <Form.Item name="tagId">
-              <Select style={{ width: '220px' }} allowClear>
+              <Select style={{ width: '220px' }} allowClear placeholder="所属标签">
                 {tags.map((item: any) => {
                   return (
                     <Option value={item._id} key={item._id}>

@@ -23,7 +23,7 @@ const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<Navigate to="/home" replace></Navigate>}></Route>
+        <Route index element={<Navigate to="login" replace></Navigate>}></Route>
         <Route path="home" element={<Sus child={<Home />} />}></Route>
         <Route path="list" element={<Sus child={<LIST />} />}></Route>
         <Route path="blog-menu" element={<Sus child={<BLOGMENU />} />}></Route>
